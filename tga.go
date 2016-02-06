@@ -15,7 +15,7 @@ const (
 type Color struct {
 	// We're storing the color data in this order rather than the more canonical Red Blue Green Alpha as this is how
 	// the order in which the data is written out so it simplifies the reading and writing process
-	blueGreenRedAlpha [3]byte
+	blueGreenRedAlpha [4]byte
 }
 
 type Image struct {
@@ -43,7 +43,7 @@ type Header struct {
 func NewColor(red byte, blue byte, green byte, alpha byte) *Color {
 	color := new(Color)
 
-	color.blueGreenRedAlpha = [3]byte{blue, green, red}
+	color.blueGreenRedAlpha = [4]byte{blue, green, red, alpha}
 
 	return color
 }
@@ -70,7 +70,7 @@ func (image *Image) Set(x int, y int, color *Color) {
 
 	log.Println(startLocation)
 
-	copy(image.data[startLocation:startLocation+int(image.format)], color.blueGreenRedAlpha[0:3])
+	copy(image.data[startLocation:startLocation+int(image.format)], color.blueGreenRedAlpha[0:image.format])
 }
 
 // Flip the image vertically
